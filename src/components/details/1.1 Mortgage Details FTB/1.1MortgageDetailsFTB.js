@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Row, Col, Select, Button } from "antd";
-import "./step2.css";
+import React, { useState } from "./node_modules/react";
+import { Row, Col, Select, Button } from "./node_modules/antd";
+import "./1.1MortgageDetailsFTB.css";
 
 const { Option } = Select;
-function StepTwo(props) {
+function MortgageDetailsFTB1p1(props) {
   const [q4, setQ4] = useState(false);
   const [disDutyTaxes, setDisDutyTaxes] = useState(true);
   const [disRegistrationFee, setDisRegistrationFee] = useState(true);
@@ -47,7 +47,7 @@ function StepTwo(props) {
   };
 
   return (
-    <div className="details-step-two">
+    <div className="MortgageDetailsFTB1p1">
       <Row className="d-row-s1">
         <Col lg={24}>
           <h1 className="heading1">Details about your loan</h1>
@@ -211,4 +211,4 @@ function StepTwo(props) {
     </div>
   );
 }
-export default StepTwo;
+export default MortgageDetailsFTB1p1;

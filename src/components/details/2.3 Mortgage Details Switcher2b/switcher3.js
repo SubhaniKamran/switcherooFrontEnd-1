@@ -178,7 +178,7 @@ function SwitcherThree(props) {
         </Col> */}
 
         <Col lg={24}>
-          <h6 className="h61">How many years are you looking to borrow for?</h6>
+          <h6 className="h61">  </h6>
         </Col>
         <Col lg={24}>
           <div>
