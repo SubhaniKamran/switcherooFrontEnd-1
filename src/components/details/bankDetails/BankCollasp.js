@@ -28,9 +28,10 @@ function BankCollapse( props ) {
         handleInputChange,
         onDateChange,
         handleRadioButton,
-       
+
     } = props;
     console.log( "inside coolasp=====>", index );
+    const dateFormat = 'YYYY-MM-DD';
     const idGeneratorOne = () => {
         return "clearingMortage" + index
     }
@@ -98,16 +99,16 @@ function BankCollapse( props ) {
     const renderAcoundName = () => {
         console.log( "acount type", accType )
         if ( accType === "loan" ) {
-            return ( <span className="account-text">Loan Account{index}
+            return ( <span className="account-text">Loan Account {index + 1}
             </span>
             )
         } else if ( accType === "overdraft" ) {
-            return ( <span className="account-text">Overdraft Account{index}
+            return ( <span className="account-text">Overdraft Account {index + 1}
             </span>
             )
         } else if ( accType === "credit" ) {
             return (
-                <span className="account-text">Credit Card Account{index}
+                <span className="account-text">Credit Card Account {index + 1}
                 </span>
 
             )
@@ -195,7 +196,7 @@ function BankCollapse( props ) {
                     </Col>
                     {lendrConditional()}
                     <Col lg={24}>
-                        <h6 className="h61">Whats is the account number?</h6>
+                        <h6 className="h61">What is the account number? </h6>
                     </Col>
                     <Col lg={16}>
                         <div className={
@@ -229,7 +230,7 @@ function BankCollapse( props ) {
                     </Col>
                     <Col lg={24}>
                         <h6 className="h61">
-                            Whats are the monthly repayments/charges?
+                            What are the monthly repayments/charges?
                         </h6>
                     </Col>
                     <Col lg={16}>
@@ -279,7 +280,7 @@ function BankCollapse( props ) {
                             }
                         >
 
-                            <DatePicker defaultValue={finalPayDate !== "" ? finalPayDate : moment( '2015-06-06', 'YYYY-MM-DD' )} onChange={( date, dateString ) => onDateChange( date, dateString, index )} />
+                            <DatePicker defaultValue={finalPayDate !== "" && finalPayDate !== null ? moment( finalPayDate, dateFormat ) : moment( '2015-06-06', dateFormat )} onChange={( date, dateString ) => onDateChange( date, dateString, index )} />
                         </div>
                     </Col>}
                     <Col lg={24}>
@@ -296,12 +297,12 @@ function BankCollapse( props ) {
                             }
                         >
                             <input
-                                
+
                                 type="radio"
                                 name={idGeneratorOne()}
                                 id={idGeneratorOne()}
                                 className=""
-                                checked={clearing ==="yes"?true:false}
+                                checked={clearing === "yes" ? true : false}
                                 value="yes"
                             />
                             <label for={idGeneratorOne()}>Yes</label>
@@ -314,11 +315,11 @@ function BankCollapse( props ) {
                             }
                         >
                             <input
-                                onClick={()=>handleRadioButton( 'no', index )}
+                                onClick={() => handleRadioButton( 'no', index )}
                                 type="radio"
                                 name={idGeneratorTwo()}
                                 id={idGeneratorTwo()}
-                                checked={clearing === "no"?true:false}
+                                checked={clearing === "no" ? true : false}
                                 className=""
                                 value="no"
                             />

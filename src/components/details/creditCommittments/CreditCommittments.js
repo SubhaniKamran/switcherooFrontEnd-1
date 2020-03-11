@@ -5,15 +5,18 @@ import InputMask from 'react-input-mask'
 import { connect } from "react-redux";
 import Api from "../../../redux/api/detailsApi";
 import { baseurl } from "../../../redux/api";
+import * as actions from "../../../redux/actions/details/detailsAction";
+import { configConsumerProps } from "antd/lib/config-provider";
 
 const { Option } = Select;
 const banks = [
     "Aib",
     "An Post",
-    "currentAccIns of Ireland",
+    "Bank of Ireland",
     "KBC",
     "PTSB",
-    "Ulster currentAccIns",
+    "EBS",
+    "Ulster Bank",
     "Credit Union",
     "Other"
 ];
@@ -22,9 +25,9 @@ const counties = [
     "Carlow",
     "Cavan",
     "Clare",
-    "Cork branchCity",
+    "Cork City",
     "Cork County",
-    "Denegal",
+    "Donegal",
     "Dublin 1",
     "Dublin 2",
     "Dublin 3",
@@ -47,17 +50,17 @@ const counties = [
     "Dublin 20",
     "Dublin 22",
     "Dublin 24",
-    "Dublin Country(North)",
-    "Dublin Country(South)",
-    "Dublin Country(West)",
-    "Galway branchCity",
-    "Galway Country",
+    "Dublin County(North)",
+    "Dublin County(South)",
+    "Dublin County(West)",
+    "Galway City",
+    "Galway County",
     "Kerry",
     "Kildare",
     "Kilkenny",
     "Laois",
-    "Leitrim branchCity",
-    "Limerick Country",
+    "Leitrim City",
+    "Limerick County ",
     "Longford",
     "Louth",
     "Mayo",
@@ -67,8 +70,8 @@ const counties = [
     "Roscommon",
     "Sligo",
     "Tipperary",
-    "Waterford branchCity",
-    "Waterford Country",
+    "Waterford City",
+    "Waterford County",
     "Westmeath",
     "Wexford",
     "Wicklow"
@@ -165,6 +168,7 @@ class CreditCommittments extends Component {
         this.props.changeProfRout( 7 );
     };
     handleSubmit = () => {
+        console.log( "monthly monthlyOutgoings====>", this.props.monthlyOutgoings )
         let { currentAccIns,
             sortCode,
             credUnionLoc,
@@ -195,69 +199,75 @@ class CreditCommittments extends Component {
         this.props.setCreditCommentments( {
             userId: this.props.userId,
             monthlyOutgoings: {
-                ...this.props.newProps,
+                ...this.props.monthlyOutgoings,
             },
             creditCommitments: {
                 ...data
             }
         } )
         console.log( this.props.loading );
-        if ( !this.props.loading ) {
-            this.props.changeProfRout( 7 );
-        }
+        let self = this
+        // if ( !this.props.loading ) {
+           
+        // }
 
     }
-    componentDidMount = () => {
-        const options = {
-            method: "GET",
-            headers: new Headers( {
-                Authorization: "Bearer " + localStorage.getItem( "tokenas" ),
-                "Content-Type": "application/json"
-            } )
-        };
-        let url = `${ baseurl}/detailsYouNeed/getDetails/${ this.props.userId }`
-        fetch( url, options )
-            .then( res => {
-                console.log( res );
-                res.json().then( res => {
-                    console.log( "responsed====>", res.creditCommitments );
-                    if ( res.creditCommitments ) {
-                        const { currentAccIns,
-                            sortCode,
-                            credUnionLoc,
-                            institutionName,
-                            branchAddress,
-                            branchCity,
-                            branchCounty,
-                            accDuration,
-                            eirCode,
-                            accNum,
-                            comments,
-                            firstPaymentAcc } = res.creditCommitments
-                        this.setState( {
-                            currentAccIns,
-                            sortCode,
-                            credUnionLoc,
-                            institutionName,
-                            branchAddress,
-                            branchCity,
-                            branchCounty,
-                            accDuration,
-                            eirCode,
-                            accNum,
-                            comments,
-                            firstPaymentAcc
+    // componentDidMount = () => {
+    //     const options = {
+    //         method: "GET",
+    //         headers: new Headers( {
+    //             Authorization: "Bearer " + localStorage.getItem( "tokenas" ),
+    //             "Content-Type": "application/json"
+    //         } )
+    //     };
+    //     let url = `${ baseurl }/detailsYouNeed/getDetails/${ this.props.userId }`
+    //     fetch( url, options )
+    //         .then( res => {
+    //             console.log( res );
+    //             res.json().then( res => {
+    //                 console.log( "credic commentments===>", res );
+    //                 console.log( "responsed====>", res.creditCommitments );
+    //                 if ( res.creditCommitments.loanOrOverdraftCosts && res.creditCommitments.loanOrOverdraftCosts.length > 0 ) {
+    //                     console.log( "inside condition===>", res.creditCommitments.loanOrOverdraftCosts )
+    //                     this.props.setBanks( res.creditCommitments.loanOrOverdraftCosts );
+    //                 }
+    //                 if ( res.creditCommitments ) {
+    //                     const { currentAccIns,
+    //                         sortCode,
+    //                         credUnionLoc,
+    //                         institutionName,
+    //                         branchAddress,
+    //                         branchCity,
+    //                         branchCounty,
+    //                         accDuration,
+    //                         eirCode,
+    //                         accNum,
+    //                         comments,
+    //                         firstPaymentAcc } = res.creditCommitments
+    //                     this.setState( {
+    //                         currentAccIns,
+    //                         sortCode,
+    //                         credUnionLoc,
+    //                         institutionName,
+    //                         branchAddress,
+    //                         branchCity,
+    //                         branchCounty,
+    //                         accDuration,
+    //                         eirCode,
+    //                         accNum,
+    //                         comments,
+    //                         firstPaymentAcc
 
-                        } )
-                    }
+    //                     } )
+    //                 }
 
-                } );
-            } )
-            .catch( err => {
-                console.log( err );
-                alert( err.msg );
-            } );
-    }
+    //             } );
+    //         } )
+    //         .catch( err => {
+    //             console.log( err );
+    //             alert( err.msg );
+    //         } );
+    // }
     renderCommentsBox = ( q ) => {
         const { comments } = this.state
         if ( q == "b" ) {
@@ -372,7 +382,7 @@ class CreditCommittments extends Component {
                                 name="branchCity"
                                 value={branchCity}
                                 onChange={this.handleInputChange}
-                                placeholder="branchCity" />
+                                placeholder="Town/City" />
                         </div>
                     </Col>
                     <Col className="colomn_8" lg={15}>
@@ -424,7 +434,7 @@ class CreditCommittments extends Component {
                         </div>
                     </Col>
                     <Col lg={24}>
-                        <h6 className="h61">How long have you had this account?</h6>
+                        <h6 className="h61">How long have you had this account (years)?</h6>
                     </Col>
                     <Col className="colomn_8" lg={6} style={{ width: "27%" }}>
                         <div>
@@ -492,13 +502,16 @@ class CreditCommittments extends Component {
                         <div className="btn-div">
                             <Button
                                 style={{ height: "40px" }}
-                                onClick={() => this.props.changeProfRout( 5 )}
+                                onClick={() => this.props.changeProfRoute(4)}
                                 className="btn1"
                             >
                                 Back
                             </Button>
                             <Button
-                                onClick={() => this.handleSubmit()}
+                                onClick={() => {
+                                    this.handleSubmit()
+                                    this.props.changeProfRoute(6);
+                                }}
                                 className="btn2"
                                 loading={this.props.loading}
 
@@ -515,15 +528,16 @@ class CreditCommittments extends Component {
 const mapStateToProps = ( state ) => {
     return {
         userId: state.userReducer.user._id,
-        newProps: state.detailsReducer.monthlyOutgoings,
+        monthlyOutgoings: state.detailsReducer.monthlyOutgoings,
         loading: state.detailsReducer.loading,
         error: state.detailsReducer.error,
     }
 }
 
 
-const mapDispatchToProps = dispacth => ( {
+const mapDispatchToProps = dispatch => ( {
     setCreditCommentments: ( props, callback ) =>
-        dispacth( Api.detailsCreditDataPost( props, callback ) )
+        dispatch( Api.detailsCreditDataPost( props, callback ) ),
+    setBanks: ( data ) => dispatch( actions.setBanks( data ) ),
 } );
 export default connect( mapStateToProps, mapDispatchToProps )( CreditCommittments );

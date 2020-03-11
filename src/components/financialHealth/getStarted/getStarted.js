@@ -6,6 +6,7 @@ import Api from "../../../redux/api/financialHealthCheck";
 import { connect } from "react-redux";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import * as Actions from '../../../redux/actions/financial_health/getStarted_Action';
 
 const phoneno = /^\d{10}$/;
 const { Option } = Select;
@@ -71,13 +72,20 @@ function GetStarted(props) {
 
     overAllFormValidate: false
   });
-  const [q4, setQ4] = useState(false);
+  const [q4,setQ4] = useState("")
+
+  useEffect( () => {
+    props.onSaveQ4Data(questions.filedBankruptcy);
+  },[questions.filedBankruptcy])
+
   function clickRadio(e) {
     var label = e.target.childNodes[1];
     if (label) {
       label.click();
     }
   }
+   console.log('Q4',q4)
+  console.log("questions.filedBankruptcy",questions.filedBankruptcy);
 
   const validateRadio = (name, value) => {
     switch (name) {
@@ -177,7 +185,8 @@ function GetStarted(props) {
     var radioContainers = e.target.parentNode.parentNode.childNodes;
     var qs = questions;
     qs[e.target.name] = e.target.value;
-    setQ4(!q4);
+    // setQ4(!q4);
+    //  props.onSaveQ4Data(!data);
     validateRadio(e.target.name, e.target.value);
     for (var i = 0; i < radioContainers.length; i++) {
       var input = radioContainers[i].childNodes[0];
@@ -465,7 +474,7 @@ function GetStarted(props) {
               className=""
               value="Switcher"
             />
-            <label for="mortf2">Switching to better rate</label>
+            <label for="mortf2">Switching to a better rate</label>
           </div>
           <div
             onClick={info1}
@@ -567,6 +576,9 @@ function GetStarted(props) {
             you'd like to own the property together.
           </p>
         </Col>
+
+
+        
         <Col lg={24} className="q1">
           <div
             onClick={e => clickRadio(e)}
@@ -588,7 +600,7 @@ function GetStarted(props) {
             <label for="q41">One</label>
           </div>
           <div
-            onClick={clickRadio}
+            onClick={e => clickRadio(e)}
             className={
               questions.peopleOnMortgage === "two"
                 ? "radio-container container_malta"
@@ -607,6 +619,16 @@ function GetStarted(props) {
             <label for="q42">Two</label>
           </div>
         </Col>
+
+
+
+
+
+
+
+
+
+
         {questions.peopleOnMortgage === "two" && (
           <Col lg={24}>
             <div className="input">
@@ -704,7 +726,7 @@ function GetStarted(props) {
                 }
               >
                 <PhoneInput
-                  country={"us"}
+                  country={"ie"}
                   value={questions.phoneSecondApplicant}
                   onChange={phoneSecondApplicant =>
                     setQuestions({
@@ -713,6 +735,7 @@ function GetStarted(props) {
                       phoneSecondApplicantEmpty: false
                     })
                   }
+                  className="inputPhonepok"
                   name="phoneSecondApplicant"
                   placeholder=" ###########"
                 />
@@ -726,16 +749,16 @@ function GetStarted(props) {
         <Col className="questionme123 ">
           {/* <div className="mysetting"> */}
           <h6 style={{ fontWeight: 700 }} className="heading2 new-heading">
-            In the last 6 years, have you or anyone you're applying with
+            In the last 4 years, have you or anyone you're applying with
           </h6>
           {/* </div> */}
           <ul className="q1-ul">
-            <li>1). filled for bankruptcy</li>
+            <li> 1). Filled for bankruptcy?</li>
             {/* <li>2). been issued a county court judgement (CCJ)</li> */}
-            <li>2). had your home repossesed</li>
-            <li>3). entered into a Debt Relief Notice (DRN)</li>
-            <li>4). entered into a Debt Sattlement Arrangement (DSA)</li>
-            <li>5). entered into a Personal Insolvancy Arrangement (PIA)?</li>
+            <li>2). Had your home repossesed?</li>
+            <li>3). Entered into a Debt Relief Notice (DRN)?</li>
+            <li>4). Entered into a Debt Sattlement Arrangement (DSA)?</li>
+            <li>5). Entered into a Personal Insolvancy Arrangement (PIA)?</li>
           </ul>
           {filedBankruptcyEmpty && (
             <span className="errormissting">* This field cannot be empty</span>
@@ -836,7 +859,7 @@ function GetStarted(props) {
               className="btn2"
               loading={props.financial_data.loading}
             >
-              Save & Countinue
+              Save & Continue
             </Button>
           </div>
         </Col>
@@ -858,7 +881,8 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispacth => ({
   set_financial_BackGround: (props, callback) =>
-    dispacth(Api.financialDataPost(props, callback))
+    dispacth(Api.financialDataPost(props, callback)),
+   onSaveQ4Data : (data) => dispacth(Actions.saveQ4Data(data))
 });
 
 export default connect(

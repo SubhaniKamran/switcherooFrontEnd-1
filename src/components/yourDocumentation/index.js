@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Row, Col } from "antd";
-import { Route } from "react-router-dom";
-import FirstForm from "./firstForm/step4";
+import React, { useState } from "./node_modules/react";
+import { Row, Col } from "./node_modules/antd";
+import { Route } from "./node_modules/react-router-dom";
+// import FirstForm from "./firstForm/step4";
 
-function dMain(props) {
+function mdoc(props) {
   return (
     <Col lg={24}>
       <Route
@@ -14,4 +14,4 @@ function dMain(props) {
     </Col>
   );
 }
-export default dMain;
+export default mdoc;
