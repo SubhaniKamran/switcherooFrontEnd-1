@@ -28,7 +28,7 @@ import CreditCommentments from "./creditCommittments//CreditCommittments";
 import MortgageFrom1 from "./step1//step1";
 import MortgageFrom2 from "./step2//step2";
 import MortgageFrom3 from "./step3//step3";
-import MortgageFrom4 from "./detailMover/detailMover";
+import MortgageFrom4 from "./3.2 Mortgage Details Mover2b/detailMover";
 import IncomeDetailsSE from "./incomDetailsSE/incomDetailsSE";
 import IncomeDetailsPYE from "./incomDetailsPAYE/incomDetailsPAYE";
 

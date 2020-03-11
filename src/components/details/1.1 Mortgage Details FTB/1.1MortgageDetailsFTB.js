@@ -1,5 +1,5 @@
-import React, { useState } from "./node_modules/react";
-import { Row, Col, Select, Button } from "./node_modules/antd";
+import React, { useState } from "react";
+import { Row, Col, Select, Button } from "antd";
 import "./1.1MortgageDetailsFTB.css";
 
 const { Option } = Select;
