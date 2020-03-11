@@ -430,8 +430,16 @@ function MortgageDetailsStep1(props) {
                 // props.changeProfRoute(1)
                 console.log(questions);
                 props.MortgageFrom(questions.situation);
-                props.isMortgageFrom(true);
-                props.setProgress(50);
+                props.isMortgageFrom(1);
+                props.setProgress(
+                  questions.situation == "First time Borrower"
+                    ? 50
+                    : questions.situation === "Mortgage Switcher"
+                    ? 33
+                    : questions.situation == "House Mover"
+                    ? 25
+                    : 0
+                );
               }}
               className="btn2"
               // loading={props.financial_data.loading}

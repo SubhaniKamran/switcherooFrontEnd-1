@@ -396,13 +396,19 @@ function StepThree(props) {
           <div className="btn-div">
             <Button
               style={{ height: "40px" }}
-              onClick={() => props.isMortgageFrom(false)}
+              onClick={() => {
+                props.isMortgageFrom(0)
+                props.setProgress(0)
+              }}
               className="btn1"
             >
               Back
             </Button>
             <Button
-              onClick={() => props.changeProfRoute(1)}
+              onClick={() => {
+                props.isMortgageFrom(2)
+                props.setProgress(50)
+              }}
 
               // onClick={onsubmitForm}
               className="btn2"

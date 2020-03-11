@@ -268,13 +268,19 @@ function SwitcherThree(props) {
           <div className="btn-div">
             <Button
               style={{ height: "40px" }}
-              onClick={() => window.history.back()}
+              onClick={() => {
+                props.changeProfRoute(0)
+                props.isMortgageFrom(1)
+                props.setProgress(33)
+
+              }}
               className="btn1"
             >
               Back
             </Button>
             <Button
-              onClick={() => handleRoute("/home/details/additional_p")}
+              onClick={() =>{props.changeProfRoute(1)
+                props.setProgress(0)}}
               // onClick={onsubmitForm}
               className="btn2"
             // loading={props.financial_data.loading}
